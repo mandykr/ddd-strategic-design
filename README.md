@@ -207,3 +207,43 @@
     - 배달 주문(`delivery`)이면 배달 완료(`delivered`) 상태여야 한다.
     - 매장(`eatIn`) 주문이면 주문 테이블(`OrderTable`)을 빈 테이블로 설정 및 방문 고객 수(`numberOfGuests`)를 0으로 변경한다.
   - 주문 목록을 조회한다.(`findAll`)
+
+#### 매장 주문(`eatIn`)
+```mermaid
+sequenceDiagram
+    actor Admin 
+    autonumber
+		Admin ->> System : 주문 테이블 선택 및 방문 고객 수 지정
+		Admin ->> System : 주문 요청
+		Admin ->> System : 주문 수락
+		Admin ->> System : 준비 완료
+		Admin ->> System : 주문 완료
+        Admin ->> System : 빈 테이블 설정 및 방문 고객 수 0으로 변경
+```
+
+#### 포장 주문(`takeout`)
+```mermaid
+sequenceDiagram
+	actor Customer
+    actor Admin
+    autonumber
+		Admin->> System : 주문 요청
+		Admin ->> System : 주문 수락
+		Admin ->> System : 준비 완료
+		Admin -->> Customer : 주문 메뉴 전달
+		Admin ->> System : 주문 완료
+```
+
+#### 배달 주문(`delivery`)
+```mermaid
+sequenceDiagram
+    actor Admin 
+    autonumber
+		Admin->> System : 주문 요청
+		Admin ->> System : 주문 수락
+		System -->> Delivery Agency : 호출
+		Admin ->> System : 준비 완료
+		Delivery Agency ->> System : 배달 시작
+		Delivery Agency ->> System : 배달 완료
+		Admin ->> System : 주문 완료
+```
